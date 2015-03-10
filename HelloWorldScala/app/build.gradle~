@@ -4,25 +4,17 @@ apply plugin: "jp.leafytree.android-scala"
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
-
     defaultConfig {
         applicationId "ru.arusin.helloworld"
         minSdkVersion 14
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
-        multiDexEnabled true
     }
-
-    dexOptions {
-        preDexLibraries false
-        javaMaxHeapSize "2g"
-    }
-
     buildTypes {
         release {
-            minifyEnabled true
-            proguardFiles 'proguard-rules.pro'
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     productFlavors {
@@ -33,7 +25,6 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'org.scala-lang:scala-library:2.11.5'
-    compile 'com.android.support:multidex:1.0.0'
 }
 
 afterEvaluate {
@@ -45,6 +36,4 @@ afterEvaluate {
                 "--main-dex-list=$rootDir/main-dex-list.txt".toString(),
         ]
     }
-
-
 }
