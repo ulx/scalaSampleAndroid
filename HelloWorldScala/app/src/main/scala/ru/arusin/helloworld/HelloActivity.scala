@@ -4,10 +4,10 @@ import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import com.google.common.collect.ImmutableSet
+import org.apache.commons.math3.analysis.function.Abs
+import scalaz.Scalaz._
 
-import scala.collection.mutable.ArrayBuffer
-import scala.collection.mutable.ArrayBuffer
-import scala.collection.mutable.ArrayBuffer
 
 class HelloActivity extends Activity {
   override def onCreate(savedInstanceState: Bundle) {
@@ -15,16 +15,13 @@ class HelloActivity extends Activity {
     setContentView(R.layout.activity_hello)
     val scalaTextView = findViewById(R.id.scala_text_view).asInstanceOf[TextView]
     scalaTextView.setText(new HelloJava().hello())
+
+    val values = for {
+      str <- List("1", "2", "3", "string", "5")
+      int <- str.parseInt.toOption
+    }  yield (new Abs()).value(int)
+    Log.d("debug", "" + ImmutableSet.of(values))
+
   }
 }
 
-trait Animal
-private class Dog extends Animal
-private class Cat extends Animal
-
-object Animal {
-  def apply(kind: String) = kind match {
-    case "dog" => new Dog()
-    case "cat" => new Cat()
-  }
-}
